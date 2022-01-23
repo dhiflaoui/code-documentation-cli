@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as esbuild from "esbuild-wasm";
+import { unpkgPathPlugin } from "./plugins/unpkg-path-plugin";
 import "./App.css";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -25,13 +26,24 @@ function App() {
       return;
     }
     //transpiler (babel)
-    const result = await ref.current.transform(input, {
+    /* const result = await ref.current.transform(input, {
       loader: "jsx",
       target: "es2015",
+    }); */
+    const result = await ref.current.build({
+      entryPoints: ["index.js"],
+      bundle: true,
+      write: false,
+      plugins: [unpkgPathPlugin()],
+      define: {
+        "process.env.NODE_ENV": '"porduction"',
+        global: "window",
+      },
     });
-    setCode(result.code);
-  };
 
+    setCode(result.outputFiles[0].text);
+  };
+  /*****************************************/
   return (
     <Box
       component="form"

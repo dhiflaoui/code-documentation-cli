@@ -36,7 +36,7 @@ function App() {
       write: false,
       plugins: [unpkgPathPlugin()],
       define: {
-        "process.env.NODE_ENV": '"porduction"',
+        "process.env.NODE_ENV": '"porduction"', //avoid some package error
         global: "window",
       },
     });

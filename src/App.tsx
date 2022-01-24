@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as esbuild from "esbuild-wasm";
 import { unpkgPathPlugin } from "./plugins/unpkg-path-plugin";
+import { fetchPlugin } from "./plugins/fetch-plugin";
 import "./App.css";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -34,7 +35,7 @@ function App() {
       entryPoints: ["index.js"],
       bundle: true,
       write: false,
-      plugins: [unpkgPathPlugin()],
+      plugins: [unpkgPathPlugin(), fetchPlugin(input)],
       define: {
         "process.env.NODE_ENV": '"porduction"', //avoid some package error
         global: "window",

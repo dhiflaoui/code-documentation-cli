@@ -37,12 +37,19 @@ function App() {
       write: false,
       plugins: [unpkgPathPlugin(), fetchPlugin(input)],
       define: {
-        "process.env.NODE_ENV": '"porduction"', //avoid some package error
+        "process.env.NODE_ENV": '"production"', //avoid some package error
         global: "window",
       },
     });
 
     setCode(result.outputFiles[0].text);
+
+    //execute the code inside the browser
+    try {
+      eval(result.outputFiles[0].text);
+    } catch (err) {
+      console.log(err);
+    }
   };
   /*****************************************/
   return (
